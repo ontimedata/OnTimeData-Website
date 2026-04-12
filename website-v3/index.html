@@ -411,7 +411,21 @@
         </div>
 
         <div class="contact-right reveal-up" style="--delay:.15s">
-          <form class="contact-form" id="contact-form">
+          <form
+            class="contact-form"
+            id="contact-form"
+            name="contact"
+            method="POST"
+            netlify
+            netlify-honeypot="bot-field"
+          >
+            <!-- Netlify required hidden fields -->
+            <input type="hidden" name="form-name" value="contact" />
+            <!-- Honeypot spam trap (hidden from real users) -->
+            <p class="form-honeypot" aria-hidden="true">
+              <label>Don't fill this out: <input name="bot-field" /></label>
+            </p>
+
             <div class="form-row">
               <div class="form-field">
                 <label for="name">Name</label>
@@ -437,11 +451,18 @@
               <label for="message">Message</label>
               <textarea id="message" name="message" rows="5" placeholder="Tell us how we can help..." required></textarea>
             </div>
-            <button type="submit" class="btn-glow btn-full">
+            <button type="submit" class="btn-glow btn-full" id="form-submit">
               <span class="btn-shine"></span>
-              Send Message
+              <span id="submit-label">Send Message</span>
             </button>
             <p class="form-note">We typically respond within one business day.</p>
+
+            <!-- Success state (shown after submission) -->
+            <div class="form-success" id="form-success" hidden>
+              <div class="form-success-icon">&#10003;</div>
+              <h3>Message Sent!</h3>
+              <p>Thanks for reaching out. We'll get back to you at data@ontimedata.com within one business day.</p>
+            </div>
           </form>
         </div>
       </div>

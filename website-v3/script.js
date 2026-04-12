@@ -239,22 +239,39 @@ function initSmoothScroll() {
   });
 }
 
-// ─── CONTACT FORM ────────────────────────────────────────────────────────────
+// ─── CONTACT FORM (Netlify Forms AJAX) ───────────────────────────────────────
 function initContactForm() {
-  document.getElementById('contact-form').addEventListener('submit', function (e) {
+  const form        = document.getElementById('contact-form');
+  const submitBtn   = document.getElementById('form-submit');
+  const submitLabel = document.getElementById('submit-label');
+  const successEl   = document.getElementById('form-success');
+
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
-    const name    = document.getElementById('name').value.trim();
-    const email   = document.getElementById('email').value.trim();
-    const subject = document.getElementById('subject').value;
-    const message = document.getElementById('message').value.trim();
 
-    const sub  = subject
-      ? `[OnTimeData.com] ${subject.charAt(0).toUpperCase() + subject.slice(1)} inquiry from ${name}`
-      : `[OnTimeData.com] Inquiry from ${name}`;
-    const body = `Name: ${name}\nEmail: ${email}\nTopic: ${subject || 'Not specified'}\n\nMessage:\n${message}`;
+    // Loading state
+    submitBtn.disabled = true;
+    submitLabel.textContent = 'Sending…';
 
-    window.location.href =
-      `mailto:data@ontimedata.com?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`;
+    const body = new URLSearchParams(new FormData(form)).toString();
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body,
+    })
+      .then(() => {
+        // Hide form fields, show success message
+        form.querySelectorAll(
+          '.form-row, .form-field, .form-honeypot, #form-submit, .form-note'
+        ).forEach(el => { el.hidden = true; });
+        successEl.hidden = false;
+      })
+      .catch(() => {
+        submitLabel.textContent = 'Send Message';
+        submitBtn.disabled = false;
+        alert('Something went wrong. Please email us directly at data@ontimedata.com');
+      });
   });
 }
 

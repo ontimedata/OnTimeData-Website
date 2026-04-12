@@ -1090,6 +1090,49 @@ strong { color: var(--white); font-weight: 600; }
 .form-field select option { background: var(--bg-card); color: var(--white); }
 .form-field textarea { resize: vertical; min-height: 120px; }
 
+/* Netlify honeypot — must be invisible to real users */
+.form-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.form-success {
+  text-align: center;
+  padding: 32px 16px;
+  animation: fade-in .4s ease;
+}
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.form-success-icon {
+  width: 56px; height: 56px;
+  background: linear-gradient(135deg, var(--cyan), var(--purple));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: var(--bg);
+  font-weight: 700;
+  margin: 0 auto 20px;
+  box-shadow: 0 0 28px rgba(34,211,238,.4);
+}
+.form-success h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  color: var(--white);
+  margin-bottom: 10px;
+}
+.form-success p {
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
 .form-note {
   font-size: 13px;
   color: var(--text-dim);
