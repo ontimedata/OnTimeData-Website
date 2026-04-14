@@ -4,36 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OnTimeData LLC | AI Infrastructure & Node Network Operations</title>
-  <meta name="description" content="OnTimeData LLC is a licensed node network operator and AI infrastructure company managing 95+ nodes. Built for enterprises and the next era of intelligent services." />
+  <meta name="description" content="OnTimeData LLC is an AI infrastructure company and licensed node network operator, educating people on AI and emerging technologies." />
   <link rel="stylesheet" href="styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-  <!-- PARTICLE CANVAS (global background) -->
-  <canvas id="particle-canvas"></canvas>
-
   <!-- NAV -->
-  <header class="nav" id="nav">
+  <header class="nav-header" id="nav-header">
     <div class="container nav-inner">
       <a href="#home" class="logo">
-        <div class="logo-icon">
-          <span>OTD</span>
-          <div class="logo-ring"></div>
-        </div>
-        <div class="logo-words">
-          <span class="logo-name">OnTimeData</span>
-          <span class="logo-llc">LLC</span>
-        </div>
+        <span class="logo-mark">OTD</span>
+        <span class="logo-text">OnTimeData <span class="logo-llc">LLC</span></span>
       </a>
-      <nav class="nav-links" id="nav-links">
-        <a href="#about" class="nav-link">About</a>
-        <a href="#services" class="nav-link">Services</a>
-        <a href="#education" class="nav-link">Learn</a>
-        <a href="#contact" class="nav-cta">Get in Touch</a>
+      <nav class="nav-links">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#education">Learn</a>
+        <a href="#contact" class="btn btn-outline-sm">Contact Us</a>
       </nav>
-      <button class="burger" id="burger" aria-label="Menu">
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -41,194 +32,157 @@
       <a href="#about">About</a>
       <a href="#services">Services</a>
       <a href="#education">Learn</a>
-      <a href="#contact">Get in Touch</a>
+      <a href="#contact">Contact Us</a>
     </div>
   </header>
 
   <!-- HERO -->
   <section class="hero" id="home">
-    <div class="hero-glow hero-glow-cyan"></div>
-    <div class="hero-glow hero-glow-purple"></div>
+    <div class="hero-bg">
+      <div class="grid-overlay"></div>
+      <div class="glow glow-1"></div>
+      <div class="glow glow-2"></div>
+    </div>
     <div class="container hero-inner">
-      <div class="hero-badge reveal-up">
-        <span class="pulse-dot"></span>
-        <span>AI Infrastructure &amp; Node Operations</span>
-      </div>
-      <h1 class="hero-title reveal-up" style="--delay:.1s">
-        Powering the <span class="grad-text">Networks</span><br />
-        That Run <span class="grad-text">Tomorrow's AI</span>
+      <div class="hero-badge">AI Infrastructure &amp; Node Operations</div>
+      <h1 class="hero-title">
+        The Future of AI<br />
+        <span class="gradient-text">Infrastructure Is Here</span>
       </h1>
-      <p class="hero-sub reveal-up" id="hero-sub" style="--delay:.2s">
+      <p class="hero-sub">
         OnTimeData LLC is a licensed node network operator delivering distributed AI infrastructure at scale, empowering businesses and individuals to participate in the next generation of intelligent networks.
       </p>
-      <div class="hero-actions reveal-up" style="--delay:.3s">
-        <a href="#services" class="btn-glow">
-          <span class="btn-shine"></span>
-          Explore Services
-        </a>
-        <a href="#about" class="btn-ghost">
-          Our Mission
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
+      <div class="hero-cta">
+        <a href="#services" class="btn btn-primary">Explore Our Services</a>
+        <a href="#about" class="btn btn-ghost">Our Mission</a>
       </div>
-
-      <div class="hero-stats reveal-up" style="--delay:.4s">
-        <div class="hstat">
-          <span class="hstat-n"><span class="counter" data-target="95" data-suffix="">0</span></span>
-          <span class="hstat-l">Nodes Managed</span>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num">95</span>
+          <span class="stat-label">Nodes Under Management</span>
         </div>
-        <div class="hstat-div"></div>
-        <div class="hstat">
-          <span class="hstat-n"><span class="counter" data-target="11">0</span></span>
-          <span class="hstat-l">Advanced Factories</span>
+        <div class="stat">
+          <span class="stat-num">11</span>
+          <span class="stat-label">Advanced Network Factories</span>
         </div>
-        <div class="hstat-div"></div>
-        <div class="hstat">
-          <span class="hstat-n"><span class="counter" data-target="83">0</span></span>
-          <span class="hstat-l">Node Factories</span>
-        </div>
-        <div class="hstat-div"></div>
-        <div class="hstat">
-          <span class="hstat-n"><span class="counter" data-target="8">0</span></span>
-          <span class="hstat-l">AI Product Lines</span>
+        <div class="stat">
+          <span class="stat-num">8</span>
+          <span class="stat-label">AI Software Products Supported</span>
         </div>
       </div>
-    </div>
-
-    <div class="scroll-hint">
-      <div class="scroll-wheel"></div>
     </div>
   </section>
 
-  <!-- TICKER -->
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker-track">
-      <span>AI Infrastructure</span><span class="sep">&#9670;</span>
-      <span>Node Network Operations</span><span class="sep">&#9670;</span>
-      <span>Distributed Compute</span><span class="sep">&#9670;</span>
-      <span>Enterprise Licensing</span><span class="sep">&#9670;</span>
-      <span>Technology Education</span><span class="sep">&#9670;</span>
-      <span>AI Infrastructure</span><span class="sep">&#9670;</span>
-      <span>Node Network Operations</span><span class="sep">&#9670;</span>
-      <span>Distributed Compute</span><span class="sep">&#9670;</span>
-      <span>Enterprise Licensing</span><span class="sep">&#9670;</span>
-      <span>Technology Education</span><span class="sep">&#9670;</span>
-    </div>
-  </div>
-
   <!-- ABOUT -->
   <section class="section" id="about">
-    <div class="section-glow section-glow-left"></div>
     <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Who We Are</span>
+        <h2 class="section-title">Built on Purpose.<br />Driven by Innovation.</h2>
+      </div>
       <div class="about-grid">
         <div class="about-text">
-          <p class="section-tag reveal-up">Who We Are</p>
-          <h2 class="section-title reveal-up" style="--delay:.05s">
-            Built on Purpose.<br /><span class="grad-text-static">Driven by Innovation.</span>
-          </h2>
-          <div class="accent-quote reveal-up" style="--delay:.1s">
-            <p>OnTimeData LLC is a Delaware-based AI infrastructure company and licensed node network operator. We manage a distributed portfolio of compute nodes that power the next wave of intelligent services.</p>
-          </div>
-          <p class="body reveal-up" style="--delay:.15s">Our mission is to <strong>educate people on AI and emerging technologies</strong> while building the infrastructure that makes those technologies real. Understanding AI is not optional. It is essential for individuals, businesses, and nations that want to thrive in the years ahead.</p>
-          <p class="body reveal-up" style="--delay:.2s">We operate as a management company across a portfolio of advanced node infrastructure assets, positioning OnTimeData as a trusted, institutional-grade provider of AI network services worldwide.</p>
-
-          <div class="pillars reveal-up" style="--delay:.25s">
+          <p class="lead">
+            OnTimeData LLC is a Delaware-based AI infrastructure company and licensed node network operator. We manage a distributed network of compute nodes that power the next wave of intelligent services.
+          </p>
+          <p>
+            Our mission is simple: <strong>educate people on AI and emerging technologies</strong> while building the infrastructure that makes those technologies real. We believe that understanding AI is not optional. It is essential for individuals, businesses, and nations that want to thrive in the years ahead.
+          </p>
+          <p>
+            We operate as a management company across a portfolio of node infrastructure assets, positioning OnTimeData as a trusted, institutional-grade provider of AI network services to enterprises worldwide.
+          </p>
+          <div class="about-pillars">
             <div class="pillar">
-              <div class="pillar-dot cyan"></div>
-              <div><strong>Transparency</strong><p>Clear, honest communication with clients, investors, and the public.</p></div>
+              <div class="pillar-icon">&#9670;</div>
+              <div>
+                <strong>Transparency</strong>
+                <p>Clear, honest communication with clients, investors, and the public.</p>
+              </div>
             </div>
             <div class="pillar">
-              <div class="pillar-dot purple"></div>
-              <div><strong>Education First</strong><p>We make complex technology accessible and understandable for everyone.</p></div>
+              <div class="pillar-icon">&#9670;</div>
+              <div>
+                <strong>Education First</strong>
+                <p>We make complex technology accessible and understandable for everyone.</p>
+              </div>
             </div>
             <div class="pillar">
-              <div class="pillar-dot amber"></div>
-              <div><strong>Long-Term Thinking</strong><p>Patient, strategic infrastructure investment for enduring results.</p></div>
+              <div class="pillar-icon">&#9670;</div>
+              <div>
+                <strong>Long-Term Thinking</strong>
+                <p>Patient, strategic infrastructure investment for enduring results.</p>
+              </div>
             </div>
           </div>
         </div>
-
-        <div class="about-viz reveal-up" style="--delay:.15s">
-          <div class="orbital">
-            <div class="orb-ring orb-ring-3">
-              <div class="orb-node" style="--angle:0deg"><div class="orb-dot amber"></div></div>
-              <div class="orb-node" style="--angle:60deg"><div class="orb-dot cyan"></div></div>
-              <div class="orb-node" style="--angle:120deg"><div class="orb-dot purple"></div></div>
-              <div class="orb-node" style="--angle:180deg"><div class="orb-dot amber"></div></div>
-              <div class="orb-node" style="--angle:240deg"><div class="orb-dot cyan"></div></div>
-              <div class="orb-node" style="--angle:300deg"><div class="orb-dot purple"></div></div>
+        <div class="about-visual">
+          <div class="node-diagram">
+            <div class="node-ring node-ring-outer">
+              <div class="node-dot" style="--i:0"></div>
+              <div class="node-dot" style="--i:1"></div>
+              <div class="node-dot" style="--i:2"></div>
+              <div class="node-dot" style="--i:3"></div>
+              <div class="node-dot" style="--i:4"></div>
+              <div class="node-dot" style="--i:5"></div>
             </div>
-            <div class="orb-ring orb-ring-2">
-              <div class="orb-node" style="--angle:0deg"><div class="orb-dot cyan"></div></div>
-              <div class="orb-node" style="--angle:90deg"><div class="orb-dot purple"></div></div>
-              <div class="orb-node" style="--angle:180deg"><div class="orb-dot amber"></div></div>
-              <div class="orb-node" style="--angle:270deg"><div class="orb-dot cyan"></div></div>
+            <div class="node-ring node-ring-mid">
+              <div class="node-dot" style="--i:0"></div>
+              <div class="node-dot" style="--i:1"></div>
+              <div class="node-dot" style="--i:2"></div>
+              <div class="node-dot" style="--i:3"></div>
             </div>
-            <div class="orb-ring orb-ring-1">
-              <div class="orb-node" style="--angle:45deg"><div class="orb-dot purple"></div></div>
-              <div class="orb-node" style="--angle:225deg"><div class="orb-dot cyan"></div></div>
+            <div class="node-center">
+              <span>OTD</span>
             </div>
-            <div class="orb-center">
-              <div class="orb-center-ring"></div>
-              <div class="orb-center-ring" style="animation-delay:-.6s"></div>
-              <span class="orb-label">OTD</span>
-            </div>
-            <div class="orb-connect" id="orb-connect"></div>
           </div>
-          <p class="viz-caption">Distributed node network &mdash; 95 nodes under management</p>
+          <p class="visual-caption">Distributed node network visualization</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- SERVICES -->
-  <section class="section section-alt" id="services">
-    <div class="section-glow section-glow-right"></div>
+  <section class="section section-dark" id="services">
     <div class="container">
-      <div class="section-header reveal-up">
-        <p class="section-tag">What We Do</p>
-        <h2 class="section-title">AI Infrastructure <span class="grad-text-static">Services</span></h2>
+      <div class="section-header">
+        <span class="section-tag">What We Do</span>
+        <h2 class="section-title">AI Infrastructure Services</h2>
         <p class="section-sub">We manage, operate, and grow distributed AI node networks, providing institutional-grade infrastructure services for a new era of intelligent computing.</p>
       </div>
-
       <div class="services-grid">
-        <div class="scard reveal-up" style="--delay:.05s">
-          <div class="scard-glow"></div>
-          <div class="scard-icon cyan-icon">
-            <svg viewBox="0 0 40 40" fill="none">
-              <circle cx="20" cy="20" r="17" stroke="currentColor" stroke-width="1.5"/>
-              <circle cx="20" cy="20" r="4" fill="currentColor" opacity=".5"/>
-              <circle cx="20" cy="20" r="2" fill="currentColor"/>
-              <line x1="20" y1="3" x2="20" y2="16" stroke="currentColor" stroke-width="1.5"/>
-              <line x1="37" y1="20" x2="24" y2="20" stroke="currentColor" stroke-width="1.5"/>
-              <line x1="20" y1="37" x2="20" y2="24" stroke="currentColor" stroke-width="1.5"/>
-              <line x1="3"  y1="20" x2="16" y2="20" stroke="currentColor" stroke-width="1.5"/>
+        <div class="service-card">
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2"/>
+              <circle cx="24" cy="24" r="6" fill="currentColor" opacity=".3"/>
+              <circle cx="24" cy="24" r="3" fill="currentColor"/>
+              <line x1="24" y1="4" x2="24" y2="18" stroke="currentColor" stroke-width="2"/>
+              <line x1="44" y1="24" x2="30" y2="24" stroke="currentColor" stroke-width="2"/>
+              <line x1="24" y1="44" x2="24" y2="30" stroke="currentColor" stroke-width="2"/>
+              <line x1="4" y1="24" x2="18" y2="24" stroke="currentColor" stroke-width="2"/>
             </svg>
-            <div class="icon-glow"></div>
           </div>
           <h3>Node Network Management</h3>
           <p>End-to-end operation of distributed AI compute nodes, maximizing uptime, performance, and throughput across our entire managed portfolio of 95+ nodes.</p>
-          <ul class="scard-list">
-            <li>24/7 node monitoring and uptime optimization</li>
+          <ul class="service-features">
+            <li>24/7 node monitoring &amp; uptime optimization</li>
             <li>Advanced Node Factory (ANFE) operations</li>
             <li>Multi-asset portfolio management</li>
-            <li>Performance reporting and analytics</li>
+            <li>Performance reporting &amp; analytics</li>
           </ul>
         </div>
 
-        <div class="scard scard-featured reveal-up" style="--delay:.1s">
-          <div class="scard-glow featured-glow"></div>
-          <div class="scard-badge">Core Service</div>
-          <div class="scard-icon amber-icon">
-            <svg viewBox="0 0 40 40" fill="none">
-              <rect x="5" y="5" width="30" height="30" rx="4" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M13 20L18 25L27 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <div class="service-card service-card-featured">
+          <div class="service-card-badge">Core Service</div>
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="6" y="6" width="36" height="36" rx="4" stroke="currentColor" stroke-width="2"/>
+              <path d="M16 24 L22 30 L32 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <div class="icon-glow"></div>
           </div>
           <h3>AI Infrastructure Licensing</h3>
           <p>We hold and manage premium software product licenses that power AI services across eight major product lines, positioning clients for enterprise-scale revenue opportunities.</p>
-          <ul class="scard-list">
+          <ul class="service-features">
             <li>Network node computation licensing</li>
             <li>Software license portfolio management</li>
             <li>Enterprise-grade node provisioning</li>
@@ -236,20 +190,18 @@
           </ul>
         </div>
 
-        <div class="scard reveal-up" style="--delay:.15s">
-          <div class="scard-glow"></div>
-          <div class="scard-icon purple-icon">
-            <svg viewBox="0 0 40 40" fill="none">
-              <path d="M5 33L5 23L15 23L15 33" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-              <path d="M15 33L15 15L25 15L25 33" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-              <path d="M25 33L25 7L33 7L33 33" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-              <line x1="2" y1="33" x2="38" y2="33" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <div class="service-card">
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 40 L8 28 L20 28 L20 40" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M20 40 L20 18 L32 18 L32 40" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M32 40 L32 10 L40 10 L40 40" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <line x1="4" y1="40" x2="44" y2="40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
             </svg>
-            <div class="icon-glow"></div>
           </div>
           <h3>Node Rental &amp; Yield Services</h3>
           <p>Structured node rental programs and yield generation services that turn infrastructure assets into reliable, recurring revenue streams for both OnTimeData and investor partners.</p>
-          <ul class="scard-list">
+          <ul class="service-features">
             <li>Node rental income programs</li>
             <li>APR yield generation on held assets</li>
             <li>Investor asset management</li>
@@ -257,21 +209,19 @@
           </ul>
         </div>
 
-        <div class="scard reveal-up" style="--delay:.2s">
-          <div class="scard-glow"></div>
-          <div class="scard-icon cyan-icon">
-            <svg viewBox="0 0 40 40" fill="none">
-              <circle cx="9"  cy="20" r="5" stroke="currentColor" stroke-width="1.5"/>
-              <circle cx="31" cy="9"  r="5" stroke="currentColor" stroke-width="1.5"/>
-              <circle cx="31" cy="31" r="5" stroke="currentColor" stroke-width="1.5"/>
-              <line x1="14" y1="18" x2="26" y2="12" stroke="currentColor" stroke-width="1.5"/>
-              <line x1="14" y1="22" x2="26" y2="28" stroke="currentColor" stroke-width="1.5"/>
+        <div class="service-card">
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="24" r="6" stroke="currentColor" stroke-width="2"/>
+              <circle cx="36" cy="12" r="6" stroke="currentColor" stroke-width="2"/>
+              <circle cx="36" cy="36" r="6" stroke="currentColor" stroke-width="2"/>
+              <line x1="18" y1="22" x2="30" y2="15" stroke="currentColor" stroke-width="2"/>
+              <line x1="18" y1="26" x2="30" y2="33" stroke="currentColor" stroke-width="2"/>
             </svg>
-            <div class="icon-glow"></div>
           </div>
           <h3>Enterprise Partnerships</h3>
           <p>Strategic positioning as a licensed node provider to institutions, enterprises, and nation-scale initiatives, with a focus on long-term partnerships that drive mutual growth.</p>
-          <ul class="scard-list">
+          <ul class="service-features">
             <li>Institutional node provisioning</li>
             <li>Enterprise licensing agreements</li>
             <li>Strategic advisory services</li>
@@ -284,187 +234,146 @@
 
   <!-- EDUCATION -->
   <section class="section" id="education">
-    <div class="section-glow section-glow-center"></div>
     <div class="container">
-      <div class="section-header reveal-up">
-        <p class="section-tag">Learn With Us</p>
-        <h2 class="section-title">Understanding AI &amp;<br /><span class="grad-text-static">Distributed Networks</span></h2>
+      <div class="section-header">
+        <span class="section-tag">Learn With Us</span>
+        <h2 class="section-title">Understanding AI &amp;<br />Distributed Networks</h2>
         <p class="section-sub">We believe education is the foundation of an informed future. Explore the key concepts behind the technology we build and operate.</p>
       </div>
-
-      <div class="accordion reveal-up" style="--delay:.1s" id="accordion">
-        <div class="acc-item open">
-          <button class="acc-trigger" aria-expanded="true">
-            <span class="acc-num">01</span>
-            <span class="acc-text">What is AI Infrastructure?</span>
-            <span class="acc-arrow">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 7l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-          </button>
-          <div class="acc-panel">
-            <p>AI infrastructure refers to the underlying hardware, software, and network systems that power artificial intelligence applications. Just like roads and power grids enable modern society, AI infrastructure enables modern intelligent services, from search engines to autonomous systems.</p>
-            <p>Distributed node networks are a key part of this infrastructure. Instead of relying on a single centralized server, computation is spread across thousands of interconnected nodes, making the system faster, more resilient, and more scalable.</p>
-          </div>
+      <div class="edu-grid">
+        <div class="edu-card">
+          <div class="edu-num">01</div>
+          <h3>What Is AI Infrastructure?</h3>
+          <p>
+            AI infrastructure refers to the underlying hardware, software, and network systems that power artificial intelligence applications. Just like roads and power grids enable modern society, AI infrastructure enables modern intelligent services, from search engines to autonomous systems.
+          </p>
+          <p>
+            Distributed node networks are a key part of this infrastructure: instead of relying on a single centralized server, computation is spread across thousands of interconnected nodes, making the system faster, more resilient, and more scalable.
+          </p>
         </div>
-
-        <div class="acc-item">
-          <button class="acc-trigger" aria-expanded="false">
-            <span class="acc-num">02</span>
-            <span class="acc-text">What is a Node Network?</span>
-            <span class="acc-arrow">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 7l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-          </button>
-          <div class="acc-panel">
-            <p>A node is a single compute unit in a larger network. When thousands of nodes work together, they form a distributed network capable of handling massive amounts of data processing and AI inference in parallel.</p>
-            <p>Node operators like OnTimeData LLC run and maintain these compute units, ensuring they stay online, perform correctly, and contribute to the network's overall health. In return, operators earn fees for the computation and services their nodes provide.</p>
-          </div>
+        <div class="edu-card">
+          <div class="edu-num">02</div>
+          <h3>What Is a Node Network?</h3>
+          <p>
+            A node is a single compute unit in a larger network. When thousands of nodes work together, they form a distributed network capable of handling massive amounts of data processing and AI inference in parallel.
+          </p>
+          <p>
+            Node operators like OnTimeData LLC run and maintain these compute units, ensuring they stay online, perform correctly, and contribute to the network's overall health. In return, operators earn fees for the computation and services their nodes provide.
+          </p>
         </div>
-
-        <div class="acc-item">
-          <button class="acc-trigger" aria-expanded="false">
-            <span class="acc-num">03</span>
-            <span class="acc-text">Why Does This Matter?</span>
-            <span class="acc-arrow">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 7l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-          </button>
-          <div class="acc-panel">
-            <p>The world's demand for AI compute is growing exponentially. Every AI model trained, every intelligent search query answered, and every autonomous decision made requires compute power running somewhere in the world.</p>
-            <p>Distributed AI networks make this compute democratic, not concentrated in the hands of a few massive corporations, but spread across licensed operators who serve both global enterprises and local communities. OnTimeData LLC is proud to be part of building that future.</p>
-          </div>
+        <div class="edu-card">
+          <div class="edu-num">03</div>
+          <h3>Why Does This Matter?</h3>
+          <p>
+            The world's demand for AI compute is growing exponentially. Every AI model trained, every intelligent search query answered, and every autonomous decision made requires compute power running somewhere in the world.
+          </p>
+          <p>
+            Distributed AI networks make this compute democratic, not concentrated in the hands of a few massive corporations, but spread across licensed operators who serve both global enterprises and local communities. OnTimeData LLC is proud to be part of building that future.
+          </p>
         </div>
-
-        <div class="acc-item">
-          <button class="acc-trigger" aria-expanded="false">
-            <span class="acc-num">04</span>
-            <span class="acc-text">Our Role in the Ecosystem</span>
-            <span class="acc-arrow">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 7l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-          </button>
-          <div class="acc-panel">
-            <p>OnTimeData LLC operates at the infrastructure layer. We don't just use AI, we help power it. As a licensed operator, we manage a portfolio of advanced node factories that support eight major AI software products, serving enterprise clients and contributing to global AI networks.</p>
-            <p>Our long-term vision is to be a trusted institutional partner for enterprises, governments, and organizations that need reliable, scalable AI infrastructure they can count on.</p>
-          </div>
+        <div class="edu-card">
+          <div class="edu-num">04</div>
+          <h3>Our Role in the Ecosystem</h3>
+          <p>
+            OnTimeData LLC operates at the infrastructure layer. We don't just use AI, we help power it. As a licensed operator, we manage a portfolio of advanced node factories that support eight major AI software products, serving enterprise clients and contributing to global AI networks.
+          </p>
+          <p>
+            Our long-term vision is to be a trusted institutional partner for enterprises, governments, and organizations that need reliable, scalable AI infrastructure they can count on.
+          </p>
         </div>
       </div>
-
-      <div class="edu-cta reveal-up" style="--delay:.2s">
-        <p>Stay current on AI infrastructure trends, network updates, and technology education.</p>
-        <a href="https://t.me/ontimedata" target="_blank" rel="noopener" class="btn-glow">
-          <span class="btn-shine"></span>
-          Join Us on Telegram
-        </a>
+      <div class="edu-cta">
+        <p>Want to stay current on AI infrastructure trends, network updates, and technology education?</p>
+        <a href="https://t.me/+-1U1Z1wpHyw4NDgx" target="_blank" rel="noopener" class="btn btn-primary">Join Us on Telegram</a>
       </div>
     </div>
   </section>
 
   <!-- CONTACT -->
-  <section class="section section-alt" id="contact">
-    <div class="section-glow section-glow-left"></div>
+  <section class="section section-dark" id="contact">
     <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Get In Touch</span>
+        <h2 class="section-title">Let's Work Together</h2>
+        <p class="section-sub">Whether you're an enterprise looking for infrastructure solutions, an investor seeking partnership, or simply curious about AI, we'd love to hear from you.</p>
+      </div>
       <div class="contact-grid">
-        <div class="contact-left reveal-up">
-          <p class="section-tag">Get In Touch</p>
-          <h2 class="section-title">Let's Work<br /><span class="grad-text-static">Together</span></h2>
-          <p class="body">Whether you're an enterprise looking for infrastructure solutions, an investor seeking partnership, or simply curious about AI, we'd love to hear from you.</p>
-
-          <div class="contact-links">
-            <a href="mailto:data@ontimedata.com" class="clink">
-              <div class="clink-icon">
-                <svg viewBox="0 0 20 20" fill="none"><path d="M2.5 6.5L10 11l7.5-4.5M3 15h14a1 1 0 001-1V6a1 1 0 00-1-1H3a1 1 0 00-1 1v8a1 1 0 001 1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-              </div>
-              <div class="clink-body">
-                <span class="clink-label">Email</span>
-                <span class="clink-val">data@ontimedata.com</span>
-              </div>
-            </a>
-            <div class="clink">
-              <div class="clink-icon">
-                <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M10 2c-2 3-3 5-3 8s1 5 3 8" stroke="currentColor" stroke-width="1.5"/><path d="M10 2c2 3 3 5 3 8s-1 5-3 8" stroke="currentColor" stroke-width="1.5"/><line x1="2" y1="10" x2="18" y2="10" stroke="currentColor" stroke-width="1.5"/></svg>
-              </div>
-              <div class="clink-body">
-                <span class="clink-label">Website</span>
-                <span class="clink-val">ontimedata.com</span>
-              </div>
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 8L10.89 13.26C11.2187 13.4793 11.6049 13.5963 12 13.5963C12.3951 13.5963 12.7813 13.4793 13.11 13.26L21 8M5 19H19C19.5304 19 20.0391 18.7893 20.4142 18.4142C20.7893 18.0391 21 17.5304 21 17V7C21 6.46957 20.7893 5.96086 20.4142 5.58579C20.0391 5.21071 19.5304 5 19 5H5C4.46957 5 3.96086 5.21071 3.58579 5.58579C3.21071 5.96086 3 6.46957 3 7V17C3 17.5304 3.21071 18.0391 3.58579 18.4142C3.96086 18.7893 4.46957 19 5 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </div>
-            <a href="https://t.me/ontimedata" target="_blank" rel="noopener" class="clink">
-              <div class="clink-icon">
-                <svg viewBox="0 0 20 20" fill="none"><path d="M18 3.5L2.5 9l5 2.5 2.5 5 2-4 4 3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-              </div>
-              <div class="clink-body">
-                <span class="clink-label">Telegram</span>
-                <span class="clink-val">Join our channel</span>
-              </div>
-            </a>
-            <div class="clink">
-              <div class="clink-icon">
-                <svg viewBox="0 0 20 20" fill="none"><path d="M3 8l7-6 7 6v9a1 1 0 01-1 1H4a1 1 0 01-1-1V8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 18v-6h4v6" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-              </div>
-              <div class="clink-body">
-                <span class="clink-label">Incorporated</span>
-                <span class="clink-val">Delaware LLC</span>
-              </div>
+            <div>
+              <strong>Email Us</strong>
+              <a href="mailto:data@ontimedata.com">data@ontimedata.com</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/>
+                <path d="M2 12H22" stroke="currentColor" stroke-width="2"/>
+                <path d="M12 2C9.33 6 8 9 8 12C8 15 9.33 18 12 22C14.67 18 16 15 16 12C16 9 14.67 6 12 2Z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </div>
+            <div>
+              <strong>Website</strong>
+              <span>ontimedata.com</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21.944 3.069a1.5 1.5 0 0 0-1.53-.195L2.55 10.145a1.5 1.5 0 0 0 .078 2.78l3.896 1.298 1.86 5.58a1.5 1.5 0 0 0 2.56.454l2.21-2.735 4.32 3.178a1.5 1.5 0 0 0 2.35-1.005l2.25-14.999a1.5 1.5 0 0 0-.13-.627zM9.5 15.5l-.9 2.7-1.2-3.6 9.6-7.2-7.5 8.1z" fill="currentColor"/>
+              </svg>
+            </div>
+            <div>
+              <strong>Community &amp; Updates</strong>
+              <a href="https://t.me/+-1U1Z1wpHyw4NDgx" target="_blank" rel="noopener">Join us on Telegram</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <strong>Incorporation</strong>
+              <span>Delaware LLC</span>
             </div>
           </div>
         </div>
-
-        <div class="contact-right reveal-up" style="--delay:.15s">
-          <form
-            class="contact-form"
-            id="contact-form"
-            name="contact"
-            method="POST"
-            netlify
-            netlify-honeypot="bot-field"
-          >
-            <!-- Netlify required hidden fields -->
-            <input type="hidden" name="form-name" value="contact" />
-            <!-- Honeypot spam trap (hidden from real users) -->
-            <p class="form-honeypot" aria-hidden="true">
-              <label>Don't fill this out: <input name="bot-field" /></label>
-            </p>
-
-            <div class="form-row">
-              <div class="form-field">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" placeholder="Jane Smith" required />
-              </div>
-              <div class="form-field">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="jane@company.com" required />
-              </div>
-            </div>
-            <div class="form-field">
-              <label for="subject">Topic</label>
-              <select id="subject" name="subject">
-                <option value="">Select a topic...</option>
-                <option value="enterprise">Enterprise Partnership</option>
-                <option value="investor">Investor Inquiry</option>
-                <option value="education">AI Education</option>
-                <option value="services">Our Services</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            <div class="form-field">
-              <label for="message">Message</label>
-              <textarea id="message" name="message" rows="5" placeholder="Tell us how we can help..." required></textarea>
-            </div>
-            <button type="submit" class="btn-glow btn-full" id="form-submit">
-              <span class="btn-shine"></span>
-              <span id="submit-label">Send Message</span>
-            </button>
-            <p class="form-note">We typically respond within one business day.</p>
-
-            <!-- Success state (shown after submission) -->
-            <div class="form-success" id="form-success" hidden>
-              <div class="form-success-icon">&#10003;</div>
-              <h3>Message Sent!</h3>
-              <p>Thanks for reaching out. We'll get back to you at data@ontimedata.com within one business day.</p>
-            </div>
-          </form>
-        </div>
+        <form class="contact-form" id="contact-form">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="Jane Smith" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="jane@yourcompany.com" required />
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <select id="subject" name="subject">
+              <option value="">Select a topic...</option>
+              <option value="enterprise">Enterprise Partnership</option>
+              <option value="investor">Investor Inquiry</option>
+              <option value="education">AI Education</option>
+              <option value="services">Our Services</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Tell us how we can help..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+          <p class="form-note">We typically respond within one business day.</p>
+        </form>
       </div>
     </div>
   </section>
@@ -473,24 +382,19 @@
   <footer class="footer">
     <div class="container footer-inner">
       <div class="footer-brand">
-        <div class="logo-icon small">
-          <span>OTD</span>
-        </div>
-        <div class="logo-words">
-          <span class="logo-name">OnTimeData</span>
-          <span class="logo-llc">LLC</span>
-        </div>
-        <p class="footer-tag">AI Infrastructure &amp; Node Network Operations</p>
+        <span class="logo-mark">OTD</span>
+        <span class="footer-name">OnTimeData LLC</span>
+        <p class="footer-tagline">AI Infrastructure &amp; Node Network Operations</p>
       </div>
-      <nav class="footer-nav">
+      <div class="footer-links">
         <a href="#about">About</a>
         <a href="#services">Services</a>
         <a href="#education">Learn</a>
         <a href="#contact">Contact</a>
-      </nav>
+      </div>
       <div class="footer-legal">
         <p>&copy; 2026 OnTimeData LLC. All rights reserved.</p>
-        <p>Delaware LLC &bull; <a href="mailto:data@ontimedata.com">data@ontimedata.com</a></p>
+        <p>Delaware LLC &nbsp;&bull;&nbsp; <a href="mailto:data@ontimedata.com">data@ontimedata.com</a></p>
       </div>
     </div>
   </footer>
