@@ -263,7 +263,7 @@ function initContactForm() {
       .then(() => {
         // Hide form fields, show success message
         form.querySelectorAll(
-          '.form-row, .form-field, .form-honeypot, #form-submit, .form-note'
+          '.form-field, .form-honeypot, #form-submit, .form-note'
         ).forEach(el => { el.hidden = true; });
         successEl.hidden = false;
       })
