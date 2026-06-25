@@ -201,3 +201,215 @@
     }
   }
 })();
+
+/* =========================================
+   Hero mesh — decentralized AI workflow
+   Distributed cyan nodes, peer-to-peer links,
+   light "tasks" pulsing along the connections.
+   Pure canvas. Pauses off-screen / hidden tab.
+   ========================================= */
+(function () {
+  'use strict';
+
+  const canvas = document.getElementById('heroMesh');
+  const hero   = document.getElementById('top');
+  if (!canvas || !hero) return;
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  const CYAN = '34,211,238';
+  const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let w = 0, h = 0;
+  let nodes = [];
+  let travelers = [];
+  let vignette = null;       // edge fade for a clean, framed look
+  const LINK_DIST = 160;     // px — connection threshold
+  let rafId = 0;
+  let visible = true;
+  let onScreen = true;
+
+  function rand(min, max) { return min + Math.random() * (max - min); }
+
+  function build() {
+    const rect = hero.getBoundingClientRect();
+    w = Math.max(1, rect.width);
+    h = Math.max(1, rect.height);
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width  = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    // Edge vignette: fades the mesh into the background toward the borders.
+    vignette = ctx.createRadialGradient(
+      w / 2, h / 2, Math.min(w, h) * 0.22,
+      w / 2, h / 2, Math.max(w, h) * 0.72
+    );
+    vignette.addColorStop(0, 'rgba(6,6,14,0)');
+    vignette.addColorStop(1, 'rgba(6,6,14,0.92)');
+
+    // Node count scales with area, clamped for performance.
+    const count = Math.max(34, Math.min(90, Math.round((w * h) / 22000)));
+    nodes = [];
+    for (let i = 0; i < count; i++) {
+      const z = rand(0.35, 1);            // depth: 1 = near, 0.35 = far
+      nodes.push({
+        x: rand(0, w),
+        y: rand(0, h),
+        vx: rand(-0.16, 0.16) * z,
+        vy: rand(-0.16, 0.16) * z,
+        r: 0.8 + z * 1.8,                 // nearer nodes render larger
+        z: z,
+        ph: rand(0, Math.PI * 2),         // pulse phase
+      });
+    }
+
+    // Travelers = "tasks" moving between adjacent nodes.
+    const tCount = Math.max(8, Math.min(18, Math.round(count / 6)));
+    travelers = [];
+    for (let i = 0; i < tCount; i++) {
+      const from = (Math.random() * nodes.length) | 0;
+      travelers.push({ from, to: pickNear(from), t: Math.random(), spd: rand(0.004, 0.011) });
+    }
+  }
+
+  function pickNear(from) {
+    const a = nodes[from];
+    let best = -1, bestD = Infinity;
+    for (let i = 0; i < nodes.length; i++) {
+      if (i === from) continue;
+      const dx = nodes[i].x - a.x, dy = nodes[i].y - a.y;
+      const d = dx * dx + dy * dy;
+      if (d < bestD && Math.random() < 0.6) { bestD = d; best = i; }
+    }
+    return best === -1 ? (from + 1) % nodes.length : best;
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.lineCap = 'round';
+
+    // Connections — depth-aware, restrained opacity for a refined look
+    for (let i = 0; i < nodes.length; i++) {
+      const a = nodes[i];
+      for (let j = i + 1; j < nodes.length; j++) {
+        const b = nodes[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const dist = Math.hypot(dx, dy);
+        if (dist < LINK_DIST) {
+          const depth = (a.z + b.z) / 2;
+          const o = (1 - dist / LINK_DIST) * 0.2 * depth;
+          ctx.strokeStyle = 'rgba(' + CYAN + ',' + o.toFixed(3) + ')';
+          ctx.lineWidth = 0.5 + depth * 0.7;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Nodes — depth drives size, brightness and glow (parallax feel)
+    const now = performance.now() / 1000;
+    for (let i = 0; i < nodes.length; i++) {
+      const n = nodes[i];
+      const glow = 0.5 + 0.5 * Math.sin(now * 1.4 + n.ph);
+      const alpha = (0.22 + n.z * 0.5) * (0.7 + glow * 0.3);
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(' + CYAN + ',' + alpha.toFixed(3) + ')';
+      ctx.shadowColor = 'rgba(' + CYAN + ',0.9)';
+      ctx.shadowBlur = (4 + glow * 8) * n.z;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+
+    // Travelers — data packets with fading motion trails
+    const TR = 5;
+    for (let k = 0; k < travelers.length; k++) {
+      const tr = travelers[k];
+      const a = nodes[tr.from], b = nodes[tr.to];
+      if (!a || !b) continue;
+      const dirx = b.x - a.x, diry = b.y - a.y;
+
+      for (let s = TR; s >= 1; s--) {
+        const tt = Math.max(0, tr.t - s * 0.045);
+        const fade = (1 - s / (TR + 1)) * 0.45;
+        ctx.beginPath();
+        ctx.arc(a.x + dirx * tt, a.y + diry * tt, 1.5, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(' + CYAN + ',' + fade.toFixed(3) + ')';
+        ctx.fill();
+      }
+
+      ctx.beginPath();
+      ctx.arc(a.x + dirx * tr.t, a.y + diry * tr.t, 2.4, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(190,245,255,0.98)';
+      ctx.shadowColor = 'rgba(' + CYAN + ',1)';
+      ctx.shadowBlur = 14;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+
+    // Edge vignette — frames the mesh and blends it into the page
+    if (vignette) {
+      ctx.fillStyle = vignette;
+      ctx.fillRect(0, 0, w, h);
+    }
+  }
+
+  function step() {
+    for (let i = 0; i < nodes.length; i++) {
+      const n = nodes[i];
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < 0 || n.x > w) n.vx *= -1;
+      if (n.y < 0 || n.y > h) n.vy *= -1;
+      n.x = Math.max(0, Math.min(w, n.x));
+      n.y = Math.max(0, Math.min(h, n.y));
+    }
+    for (let k = 0; k < travelers.length; k++) {
+      const tr = travelers[k];
+      tr.t += tr.spd;
+      if (tr.t >= 1) { tr.from = tr.to; tr.to = pickNear(tr.from); tr.t = 0; tr.spd = rand(0.004, 0.011); }
+    }
+  }
+
+  function frame() {
+    if (!visible || !onScreen) { rafId = 0; return; }
+    step();
+    draw();
+    rafId = requestAnimationFrame(frame);
+  }
+
+  const start = () => { if (!rafId && visible && onScreen) rafId = requestAnimationFrame(frame); };
+  const stop  = () => { if (rafId) cancelAnimationFrame(rafId); rafId = 0; };
+
+  build();
+
+  if (prefersReduced) {
+    draw(); // static frame, no animation
+    return;
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    visible = !document.hidden;
+    if (visible) start(); else stop();
+  });
+
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      onScreen = entries[0].isIntersecting;
+      if (onScreen) start(); else stop();
+    }, { threshold: 0 });
+    io.observe(hero);
+  }
+
+  let rt;
+  addEventListener('resize', () => {
+    clearTimeout(rt);
+    rt = setTimeout(build, 200);
+  }, { passive: true });
+
+  start();
+})();

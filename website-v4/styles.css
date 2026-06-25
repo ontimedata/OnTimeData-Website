@@ -73,7 +73,7 @@ img, svg { display: block; max-width: 100%; }
    TYPOGRAPHY
    ========================================= */
 h1, h2, h3, h4 {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: Georgia, 'Gelasio', 'Times New Roman', serif;
   line-height: 1.1;
   color: var(--white);
 }
@@ -150,7 +150,7 @@ strong { color: var(--white); font-weight: 600; }
   justify-content: center;
   gap: 8px;
   padding: 14px 34px;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: Georgia, 'Gelasio', 'Times New Roman', serif;
   font-weight: 600;
   font-size: 15px;
   letter-spacing: .01em;
@@ -240,7 +240,7 @@ strong { color: var(--white); font-weight: 600; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: Georgia, 'Gelasio', 'Times New Roman', serif;
   font-weight: 700;
   font-size: 12px;
   color: var(--bg);
@@ -250,7 +250,7 @@ strong { color: var(--white); font-weight: 600; }
 .logo-icon.small { width: 32px; height: 32px; font-size: 11px; border-radius: 8px; }
 .logo-words { display: flex; align-items: baseline; gap: 4px; }
 .logo-name {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: Georgia, 'Gelasio', 'Times New Roman', serif;
   font-weight: 700;
   font-size: 17px;
   color: var(--white);
@@ -286,7 +286,7 @@ strong { color: var(--white); font-weight: 600; }
   background: transparent;
   border: 1.5px dashed var(--cyan-b2);
   color: var(--cyan);
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: Georgia, 'Gelasio', 'Times New Roman', serif;
   font-weight: 600;
   font-size: 14px;
   border-radius: 100px;
@@ -354,6 +354,17 @@ strong { color: var(--white); font-weight: 600; }
   text-align: center;
   padding: 140px 0 100px;
   overflow: hidden;
+}
+
+/* Decentralized AI workflow mesh — sits above glows, below hero copy */
+.hero-mesh {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: .9;
 }
 
 .hero-glow {
@@ -467,7 +478,7 @@ strong { color: var(--white); font-weight: 600; }
 .ticker-track span {
   display: inline-block;
   padding: 0 22px;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: Georgia, 'Gelasio', 'Times New Roman', serif;
   font-size: 12px;
   font-weight: 600;
   color: var(--text-dim);
@@ -516,7 +527,7 @@ strong { color: var(--white); font-weight: 600; }
 .acc-item.open .acc-trigger { background: var(--cyan-g); }
 
 .acc-num {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: Georgia, 'Gelasio', 'Times New Roman', serif;
   font-size: 14px;
   font-weight: 700;
   color: var(--text-dim);
@@ -597,7 +608,7 @@ strong { color: var(--white); font-weight: 600; }
 }
 .calc-uplift-val {
   color: var(--cyan);
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: Georgia, 'Gelasio', 'Times New Roman', serif;
   font-size: 16px;
   letter-spacing: 0;
   text-transform: none;
@@ -607,7 +618,7 @@ strong { color: var(--white); font-weight: 600; }
   background: var(--bg-alt);
   border: 1.5px solid var(--border-2);
   border-radius: var(--r);
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: Georgia, 'Gelasio', 'Times New Roman', serif;
   font-size: 17px;
   font-weight: 600;
   color: var(--white);
@@ -694,7 +705,7 @@ strong { color: var(--white); font-weight: 600; }
   color: var(--text-dim);
 }
 .calc-output-val {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: Georgia, 'Gelasio', 'Times New Roman', serif;
   font-size: clamp(36px, 5vw, 52px);
   font-weight: 700;
   color: var(--white);
@@ -754,7 +765,7 @@ strong { color: var(--white); font-weight: 600; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: Georgia, 'Gelasio', 'Times New Roman', serif;
   font-size: 26px;
   font-weight: 700;
   color: var(--bg);
@@ -1135,3 +1146,13 @@ strong { color: var(--white); font-weight: 600; }
   opacity: 1;
   transform: translateY(0);
 }
+
+/* --- video test override: fit the 16:9 workflow clip in the features slot --- */
+.features-visual { aspect-ratio: 16 / 9; }
+.features-visual-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+@media (max-width: 900px) { .features-visual { aspect-ratio: 16 / 9; } }
