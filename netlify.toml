@@ -1,4 +1,4 @@
 # Netlify deploy config for ontimedata.com
-# Serves the current website build (website-v4) as the site root.
+# Serves the current website build (website-v6) as the site root.
 [build]
-  publish = "website-v4"
+  publish = "website-v6"

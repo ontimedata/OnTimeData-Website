@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OnTimeData | Book More. Sell Faster. Sleep Easy.</title>
+  <meta name="description" content="AI that texts your inbound prospects within seconds, qualifies them like your best rep, and drops booked appointments straight onto your calendar." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css?v=6" />
+
+  <!-- ===== testimonials section styles (scoped, uses existing tokens) ===== -->
+  <style>
+    .testi-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:24px;
+      margin-top:8px;
+    }
+    @media (max-width:820px){ .testi-grid{ grid-template-columns:1fr; } }
+
+    .testi-card{
+      position:relative;
+      background:var(--bg-card);
+      border:1px solid var(--border-2);
+      border-radius:var(--rl);
+      padding:34px 32px 30px;
+      box-shadow:var(--shadow);
+      transition:transform var(--ease), border-color var(--ease), box-shadow var(--ease);
+      overflow:hidden;
+    }
+    .testi-card::before{
+      content:"";
+      position:absolute; inset:0 0 auto 0; height:2px;
+      background:linear-gradient(90deg, transparent, var(--cyan), transparent);
+      opacity:.5;
+    }
+    .testi-card:hover{
+      transform:translateY(-4px);
+      border-color:var(--cyan-b2);
+      box-shadow:var(--shadow-lg);
+    }
+    .testi-mark{
+      font-family:var(--font-head);
+      font-size:60px; line-height:1; color:var(--cyan);
+      opacity:.28; margin-bottom:-14px;
+    }
+    .testi-stars{
+      display:flex; gap:3px; margin-bottom:16px; color:var(--amber);
+    }
+    .testi-quote{
+      color:var(--text-bright);
+      font-size:15.5px; line-height:1.75; margin-bottom:22px;
+    }
+    .testi-quote p{ margin-bottom:12px; }
+    .testi-quote p:last-child{ margin-bottom:0; }
+    .testi-quote strong{ color:var(--white); }
+    .testi-foot{
+      display:flex; align-items:center; gap:13px;
+      padding-top:18px; border-top:1px solid var(--border);
+    }
+    .testi-avatar{
+      flex:0 0 auto; width:42px; height:42px; border-radius:50%;
+      display:grid; place-items:center;
+      font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:15px;
+      color:var(--cyan); background:var(--cyan-g); border:1px solid var(--cyan-b2);
+    }
+    .testi-name{ color:var(--white); font-weight:600; font-size:15px; line-height:1.2; }
+    .testi-role{ color:var(--text); font-size:13px; }
+    .testi-verified{
+      margin-left:auto; display:inline-flex; align-items:center; gap:5px;
+      font-size:12px; color:var(--cyan); font-weight:600;
+      background:var(--cyan-g); border:1px solid var(--cyan-b);
+      padding:5px 11px; border-radius:999px; white-space:nowrap;
+    }
+
+    /* ===== booking CTA + modal ===== */
+    .booking-cta-wrap{ text-align:center; padding:20px 0 8px; }
+    .btn-pill-lg{ font-size:17px; padding:18px 44px; }
+    .booking-cta-note{ color:var(--text); font-size:14px; margin-top:16px; }
+
+    .booking-modal{
+      position:fixed; inset:0; z-index:2000;
+      display:flex; align-items:center; justify-content:center;
+      padding:20px;
+      background:rgba(3,3,10,.72);
+      -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+      opacity:0; visibility:hidden; transition:opacity .25s ease, visibility .25s ease;
+    }
+    .booking-modal.is-open{ opacity:1; visibility:visible; }
+
+    .booking-modal-panel{
+      position:relative;
+      width:100%; max-width:460px; max-height:90vh;
+      background:var(--bg-card); border:1px solid var(--border-2);
+      border-radius:var(--rl); box-shadow:var(--shadow-lg);
+      overflow:hidden;
+      transform:translateY(14px) scale(.98); transition:transform .25s cubic-bezier(.4,0,.2,1);
+    }
+    .booking-modal.is-open .booking-modal-panel{ transform:translateY(0) scale(1); }
+
+    .booking-modal-close{
+      position:absolute; top:12px; right:12px; z-index:3;
+      width:38px; height:38px; border-radius:50%;
+      display:grid; place-items:center; cursor:pointer;
+      background:var(--bg-card-h); border:1px solid var(--border-2);
+      color:var(--text-bright); transition:background var(--ease), color var(--ease);
+    }
+    .booking-modal-close:hover{ background:var(--cyan); color:var(--bg); border-color:var(--cyan); }
+
+    .booking-modal-iframe{
+      width:100%; height:78vh; max-height:720px; min-height:560px;
+      border:none; display:block;
+      filter:invert(1) hue-rotate(180deg);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================= INTERACTIVE BACKGROUND ========================= -->
+  <div class="bg-layers" aria-hidden="true">
+    <div class="bg-grid bg-grid-base"></div>
+    <div class="bg-grid bg-grid-bright"></div>
+  </div>
+
+  <!-- ========================= NAV ========================= -->
+  <nav class="nav" id="nav">
+    <div class="container nav-inner">
+      <a href="#top" class="logo">
+        <span class="logo-icon">OTD</span>
+        <span class="logo-words">
+          <span class="logo-name">OnTimeData</span>
+          <span class="logo-llc">LLC</span>
+        </span>
+      </a>
+
+      <div class="nav-links">
+        <a href="#services" class="nav-link">Services</a>
+        <a href="#how-it-works" class="nav-link">How It Works</a>
+        <a href="#features" class="nav-link">Standards</a>
+        <a href="#infrastructure" class="nav-link">Infrastructure</a>
+      </div>
+
+      <a href="#booking" class="nav-cta">Book a Consultation</a>
+
+      <button class="burger" id="burger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#services">Services</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#calculator">Calculator</a>
+      <a href="#features">Standards</a>
+      <a href="#infrastructure">Infrastructure</a>
+      <a href="#booking">Book a Consultation</a>
+    </div>
+  </nav>
+
+  <!-- ========================= HERO ========================= -->
+  <header class="hero" id="top">
+    <div class="hero-glow-wrap" data-blob="1">
+      <div class="hero-glow hero-glow-purple-1"></div>
+    </div>
+    <div class="hero-glow-wrap" data-blob="2">
+      <div class="hero-glow hero-glow-purple-2"></div>
+    </div>
+
+    <!-- Decentralized AI workflow: animated peer-to-peer node mesh -->
+    <canvas class="hero-mesh" id="heroMesh" aria-hidden="true"></canvas>
+
+    <div class="hero-inner">
+      <div class="hero-badge">
+        <span class="pulse-dot"></span>
+        AI Engagement &amp; Infrastructure
+      </div>
+
+      <h1 class="hero-title">
+        Book more. Sell <span class="accent">faster</span>. Sleep easy.
+      </h1>
+      <p class="hero-sub">
+        AI that texts your inbound prospects within seconds, qualifies them like your best rep, and drops booked appointments straight onto your calendar.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#booking" class="btn-pill btn-pill-solid">Schedule a Demo</a>
+        <a href="#infrastructure" class="btn-pill btn-pill-outline">Our Infrastructure</a>
+      </div>
+
+      <div class="hero-stats hero-pillars">
+        <a href="#benefits" class="hero-stat"><strong>AI Lead Engagement</strong><span>Reply, qualify, and book.</span></a>
+        <a href="#services" class="hero-stat"><strong>Custom Websites</strong><span>Designed, built, and maintained.</span></a>
+        <a href="#infrastructure" class="hero-stat"><strong>Private AI Infrastructure</strong><span>Your AI, your data, our operations.</span></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================= MARQUEE TICKER ========================= -->
+  <section class="ticker" aria-label="Capabilities">
+    <div class="ticker-track">
+      <span>Instant Reply</span><span class="sep">&#9670;</span>
+      <span>Human Tone</span><span class="sep">&#9670;</span>
+      <span>WhatsApp &amp; SMS</span><span class="sep">&#9670;</span>
+      <span>Pay On Results</span><span class="sep">&#9670;</span>
+      <span>Done For You</span><span class="sep">&#9670;</span>
+      <span>Custom Integrations</span><span class="sep">&#9670;</span>
+      <span>Self-Operated Infrastructure</span><span class="sep">&#9670;</span>
+      <span>Setup In Seven Days</span><span class="sep">&#9670;</span>
+      <!-- duplicate for seamless loop -->
+      <span>Instant Reply</span><span class="sep">&#9670;</span>
+      <span>Human Tone</span><span class="sep">&#9670;</span>
+      <span>WhatsApp &amp; SMS</span><span class="sep">&#9670;</span>
+      <span>Pay On Results</span><span class="sep">&#9670;</span>
+      <span>Done For You</span><span class="sep">&#9670;</span>
+      <span>Custom Integrations</span><span class="sep">&#9670;</span>
+      <span>Self-Operated Infrastructure</span><span class="sep">&#9670;</span>
+      <span>Setup In Seven Days</span><span class="sep">&#9670;</span>
+    </div>
+  </section>
+
+  <!-- ========================= SERVICES ========================= -->
+  <section class="section" id="services">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Services</span>
+        <h2 class="section-title">
+          What <span class="accent">we do</span>
+        </h2>
+        <p class="section-sub">
+          OnTimeData designs, builds, and operates AI systems for growing businesses.
+        </p>
+      </div>
+
+      <div class="services-grid">
+        <a href="#benefits" class="infra-card service-card">
+          <span class="infra-card-num">Engagement</span>
+          <h3>AI Lead Engagement</h3>
+          <p>AI that responds to every inquiry in seconds, qualifies prospects, and books appointments directly onto your calendar.</p>
+          <span class="service-link">Learn more &rarr;</span>
+        </a>
+        <a href="#booking" class="infra-card service-card">
+          <span class="infra-card-num">Web</span>
+          <h3>Websites</h3>
+          <p>Custom, high-performance websites with online booking and optional AI assistants built in, maintained by our team.</p>
+          <span class="service-link">Start a project &rarr;</span>
+        </a>
+        <a href="#infrastructure" class="infra-card service-card">
+          <span class="infra-card-num">Infrastructure</span>
+          <h3>AI Infrastructure</h3>
+          <p>Private AI and managed compute. We operate the infrastructure so your AI and your data stay under your control.</p>
+          <span class="service-link">Explore infrastructure &rarr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= BENEFITS ========================= -->
+  <section class="section section-alt" id="benefits">
+    <div class="section-glow section-glow-left"></div>
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Revenue</span>
+        <h2 class="section-title">
+          Where AI <span class="accent">grows revenue</span>
+        </h2>
+        <p class="section-sub">
+          Three proven areas where AI increases revenue without adding headcount.
+        </p>
+      </div>
+
+      <div class="accordion" data-accordion>
+        <div class="acc-item">
+          <button class="acc-trigger" type="button" aria-expanded="false">
+            <span class="acc-text">Catch Hot Prospects The Second They Land</span>
+            <span class="acc-arrow" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <div class="acc-panel">
+            <p>First reply wins. We answer every new inquiry in seconds, on the channel they actually use, with a tone they actually trust.</p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" type="button" aria-expanded="false">
+            <span class="acc-text">Wake Up Your Existing Customers</span>
+            <span class="acc-arrow" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <div class="acc-panel">
+            <p>The easiest revenue you'll ever earn is sitting in your customer list. We re-engage them with check-ins that feel personal, not pitchy.</p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" type="button" aria-expanded="false">
+            <span class="acc-text">Resurrect The Leads You Wrote Off</span>
+            <span class="acc-arrow" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <div class="acc-panel">
+            <p>Old database, new revenue. We restart cold conversations at scale and route the ones who say yes straight to your calendar.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="center-cta">
+        <a href="#booking" class="btn-pill btn-pill-outline">Request a Demo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= CALCULATOR ========================= -->
+  <section class="section" id="calculator">
+    <div class="section-glow section-glow-right"></div>
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Calculator</span>
+        <h2 class="section-title">
+          How much revenue are you leaving <span class="accent">on the table</span>?
+        </h2>
+        <p class="section-sub">
+          Enter your numbers to estimate the revenue lost to slow follow-up.
+        </p>
+      </div>
+
+      <div class="calc">
+        <div class="calc-inputs">
+          <div class="calc-field">
+            <label for="leads">Monthly Leads</label>
+            <input type="number" id="leads" min="0" step="1" value="500" />
+            <span class="calc-help">How many new prospects enter your funnel each month.</span>
+          </div>
+
+          <div class="calc-field">
+            <label for="deal">Average Deal Size (USD)</label>
+            <input type="number" id="deal" min="0" step="50" value="2500" />
+            <span class="calc-help">Average revenue per closed customer.</span>
+          </div>
+
+          <div class="calc-field">
+            <label for="close">Today's Close Rate (%)</label>
+            <input type="number" id="close" min="0" max="100" step="0.5" value="8" />
+            <span class="calc-help">Out of every 100 inquiries, how many become customers right now.</span>
+          </div>
+
+          <div class="calc-field">
+            <label for="uplift">
+              Lift From Faster Engagement
+              <span class="calc-uplift-val" id="upliftVal">20%</span>
+            </label>
+            <input type="range" id="uplift" min="15" max="25" step="1" value="20" />
+            <span class="calc-help">Real-world lift sits between 15 and 25 points. Drag to your comfort level.</span>
+          </div>
+        </div>
+
+        <div class="calc-output">
+          <div class="calc-output-card">
+            <span class="calc-output-label">Estimated Lost Revenue / Month</span>
+            <span class="calc-output-val" id="lostMonth">$0</span>
+          </div>
+          <div class="calc-output-divider"></div>
+          <div class="calc-output-card">
+            <span class="calc-output-label">Estimated Lost Revenue / Year</span>
+            <span class="calc-output-val" id="lostYear">$0</span>
+          </div>
+
+          <p class="calc-output-note">
+            A conservative estimate based on the figures above.
+          </p>
+
+          <a href="#booking" class="btn-pill btn-pill-solid btn-pill-full">Recover This Revenue</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= HOW IT WORKS ========================= -->
+  <section class="section section-alt" id="how-it-works">
+    <div class="section-glow section-glow-center"></div>
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Process</span>
+        <h2 class="section-title">
+          From click to calendar in <span class="accent">under a minute</span>
+        </h2>
+        <p class="section-sub">
+          Three steps. No new software for your team to learn.
+        </p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-circle" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H5.2L4 17.2z"/><path d="M8 9h8M8 12h5"/></svg></div>
+          <h3 class="step-title">Lead lands</h3>
+          <p class="step-text">A new prospect hits your form, ad, or campaign. We're already listening.</p>
+        </div>
+
+        <div class="step-line" aria-hidden="true"></div>
+
+        <div class="step">
+          <div class="step-circle" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg></div>
+          <h3 class="step-title">AI starts the conversation</h3>
+          <p class="step-text">Within seconds, a natural WhatsApp or SMS thread is underway. We qualify, answer, handle objections.</p>
+        </div>
+
+        <div class="step-line" aria-hidden="true"></div>
+
+        <div class="step">
+          <div class="step-circle" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M9 15.5l2 2 4-4"/></svg></div>
+          <h3 class="step-title">Booked and confirmed</h3>
+          <p class="step-text">Qualified, scheduled, and dropped onto your team's calendar. You just show up.</p>
+        </div>
+      </div>
+
+      <div class="center-cta">
+        <a href="#booking" class="btn-pill btn-pill-outline">See How It Works</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= GRADIENT BANNER ========================= -->
+  <section class="gradient-banner">
+    <div class="container">
+      <h2 class="gradient-banner-title">
+        Your team stops chasing leads and starts closing them.
+      </h2>
+    </div>
+  </section>
+
+  <!-- ========================= INDUSTRIES ========================= -->
+  <section class="section" id="industries">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Industries</span>
+        <h2 class="section-title">
+          Industries <span class="accent">built for this</span>
+        </h2>
+        <p class="section-sub">
+          Designed for lead-heavy industries where speed and follow-up decide who wins the deal, and adaptable to many more.
+        </p>
+      </div>
+
+      <div class="industries-grid">
+        <!-- Automotive -->
+        <div class="industry">
+          <div class="industry-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <path d="M5 20v-3l2-6c.5-1.5 1.5-2 3-2h12c1.5 0 2.5.5 3 2l2 6v3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M5 20v3a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M23 20v3a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="10" cy="20" r="2" stroke="currentColor" stroke-width="2"/>
+              <circle cx="22" cy="20" r="2" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+          <span class="industry-name">Automotive</span>
+        </div>
+
+        <!-- Travel -->
+        <div class="industry">
+          <div class="industry-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <path d="M16 4l3 9h10l-8 6 3 9-8-6-8 6 3-9-8-6h10z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="industry-name">Travel</span>
+        </div>
+
+        <!-- Solar -->
+        <div class="industry">
+          <div class="industry-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <circle cx="16" cy="16" r="5" stroke="currentColor" stroke-width="2"/>
+              <path d="M16 3v3M16 26v3M3 16h3M26 16h3M6.5 6.5l2 2M23.5 23.5l2 2M6.5 25.5l2-2M23.5 8.5l2-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="industry-name">Solar</span>
+        </div>
+
+        <!-- Roofing -->
+        <div class="industry">
+          <div class="industry-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <path d="M3 16L16 5l13 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 14v13h20V14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="industry-name">Roofing</span>
+        </div>
+
+        <!-- Siding -->
+        <div class="industry">
+          <div class="industry-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <rect x="5" y="6" width="22" height="20" rx="1" stroke="currentColor" stroke-width="2"/>
+              <path d="M5 12h22M5 18h22M5 24h22" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+          <span class="industry-name">Siding</span>
+        </div>
+
+        <!-- Window Remodeling -->
+        <div class="industry">
+          <div class="industry-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <rect x="5" y="5" width="22" height="22" rx="1" stroke="currentColor" stroke-width="2"/>
+              <path d="M16 5v22M5 16h22" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+          <span class="industry-name">Window Remodeling</span>
+        </div>
+
+        <!-- Clinics -->
+        <div class="industry">
+          <div class="industry-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <rect x="13" y="5" width="6" height="22" rx="1" stroke="currentColor" stroke-width="2"/>
+              <rect x="5" y="13" width="22" height="6" rx="1" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+          <span class="industry-name">Clinics</span>
+        </div>
+
+        <!-- Kitchen Remodeling -->
+        <div class="industry">
+          <div class="industry-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <path d="M8 5v9M12 5v9M10 14v13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M22 5c-2 0-3 1-3 4v6h6V5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M22 15v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="industry-name">Kitchen Remodeling</span>
+        </div>
+
+        <!-- Flooring -->
+        <div class="industry">
+          <div class="industry-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <rect x="4" y="6" width="8" height="6" stroke="currentColor" stroke-width="2"/>
+              <rect x="14" y="6" width="14" height="6" stroke="currentColor" stroke-width="2"/>
+              <rect x="4" y="14" width="14" height="6" stroke="currentColor" stroke-width="2"/>
+              <rect x="20" y="14" width="8" height="6" stroke="currentColor" stroke-width="2"/>
+              <rect x="4" y="22" width="8" height="6" stroke="currentColor" stroke-width="2"/>
+              <rect x="14" y="22" width="14" height="6" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+          <span class="industry-name">Flooring</span>
+        </div>
+
+        <!-- Hotels -->
+        <div class="industry">
+          <div class="industry-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <path d="M4 27V9a1 1 0 0 1 1-1h9v19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M14 14h13a1 1 0 0 1 1 1v12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 27h28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M8 12h2M8 16h2M8 20h2M19 19h4M19 23h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="industry-name">Hotels</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= FEATURES ========================= -->
+  <section class="section section-alt" id="features">
+    <div class="section-glow section-glow-left"></div>
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Standards</span>
+        <h2 class="section-title">
+          The <span class="accent">checklist</span> before you trust an AI with your pipeline
+        </h2>
+        <p class="section-sub">
+          The standards every AI system should meet before it handles your pipeline.
+        </p>
+      </div>
+
+      <div class="standards-grid">
+        <div class="standard">
+          <span class="standard-check" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <div>
+            <h3>Does the AI actually sound human?</h3>
+            <p>If your prospect can tell it's a bot in two messages, you've lost them. Our AI texts like the rep you wish you could clone.</p>
+          </div>
+        </div>
+        <div class="standard">
+          <span class="standard-check" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <div>
+            <h3>Is it genuinely done for you?</h3>
+            <p>Built, trained, and live in under seven days. You don't touch a prompt. You don't manage a workflow. You just watch bookings show up.</p>
+          </div>
+        </div>
+        <div class="standard">
+          <span class="standard-check" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <div>
+            <h3>Do you only pay when it works?</h3>
+            <p>Zero upfront. Run a free trial on real traffic and pay only for booked appointments.</p>
+          </div>
+        </div>
+        <div class="standard">
+          <span class="standard-check" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <div>
+            <h3>Can it handle rapid-fire texters?</h3>
+            <p>When a prospect fires off three messages in ten seconds, the AI reads the room, waits, then responds to the whole thread in one natural reply.</p>
+          </div>
+        </div>
+        <div class="standard">
+          <span class="standard-check" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <div>
+            <h3>Does it book in the conversation?</h3>
+            <p>No "click this link" awkwardness. The AI proposes times mid-conversation and locks the appointment in.</p>
+          </div>
+        </div>
+        <div class="standard">
+          <span class="standard-check" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <div>
+            <h3>Does it know when to quit?</h3>
+            <p>When a prospect says no, means it, and isn't coming back, the AI stops. No pestering. No damaged brand.</p>
+          </div>
+        </div>
+        <div class="standard">
+          <span class="standard-check" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <div>
+            <h3>Where does it actually run?</h3>
+            <p>On AI infrastructure we operate and monitor ourselves. End-to-end encrypted. No fragile, stitched-together no-code tools.</p>
+          </div>
+        </div>
+        <div class="standard">
+          <span class="standard-check" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <div>
+            <h3>Will it talk to your existing stack?</h3>
+            <p>Custom-coded integrations to whatever CRM, calendar, or pipeline you already run. We adapt to your workflow, not the other way around.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= INFRASTRUCTURE ========================= -->
+  <section class="section" id="infrastructure">
+    <div class="section-glow section-glow-right"></div>
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Infrastructure</span>
+        <h2 class="section-title">
+          We run the <span class="accent">infrastructure</span>
+        </h2>
+        <p class="section-sub">
+          Behind every assistant we build is a network of AI compute we operate ourselves. No mystery servers. No middlemen.
+        </p>
+      </div>
+
+      <div class="infra-grid">
+        <div class="node-panel">
+          <div class="node-panel-head">
+            <span>Node network</span>
+            <span class="live"><span class="pulse-dot"></span>Online</span>
+          </div>
+          <div class="nodes" id="nodes" aria-hidden="true"></div>
+          <div class="node-stats">
+            <div><strong>95+</strong><span>Nodes managed</span></div>
+            <div><strong>24/7</strong><span>Monitoring</span></div>
+            <div><strong>100%</strong><span>Self-operated</span></div>
+          </div>
+        </div>
+
+        <div class="infra-cards">
+          <div class="infra-card">
+            <span class="infra-card-num">Compute</span>
+            <h3>We operate</h3>
+            <p>A distributed fleet of AI compute nodes, monitored around the clock and tuned for uptime.</p>
+          </div>
+          <div class="infra-card">
+            <span class="infra-card-num">Capacity</span>
+            <h3>We delegate</h3>
+            <p>That capacity goes where the work is: client workloads, partner networks, and the AI services we build for you.</p>
+          </div>
+          <div class="infra-card">
+            <span class="infra-card-num">Management</span>
+            <h3>We manage</h3>
+            <p>Already own infrastructure? We run it for you, from setup and monitoring to reporting.</p>
+          </div>
+          <div class="infra-card">
+            <span class="infra-card-num">Privacy</span>
+            <h3>We keep it private</h3>
+            <p>Your data runs on infrastructure we control, not on a stranger's shared server.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="brain">
+        <div>
+          <span class="eyebrow" style="margin-bottom:14px"><b>//</b> Private AI</span>
+          <h3>Own your <span class="accent">AI brain</span></h3>
+          <p>Most businesses rent their AI. Their data sits on someone else's servers, under someone else's rules and prices.</p>
+          <p>We build you a private AI that learns your business: your services, your tone, your customers. It runs on infrastructure we manage, it gets smarter every month, and it stays yours.</p>
+          <a href="#booking" class="btn-pill btn-pill-solid">Discuss Private AI</a>
+        </div>
+        <div class="brain-vs">
+          <div class="brain-col">
+            <h4>Renting AI</h4>
+            <ul>
+              <li>Your data trains their model</li>
+              <li>Prices change without notice</li>
+              <li>Generic answers for everyone</li>
+              <li>Start over if they shut down</li>
+            </ul>
+          </div>
+          <div class="brain-col own">
+            <h4>Owning your AI</h4>
+            <ul>
+              <li>Your data stays yours</li>
+              <li>Predictable, fixed costs</li>
+              <li>Trained on your business</li>
+              <li>An asset that grows in value</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= TESTIMONIALS ========================= -->
+  <section class="section" id="testimonials">
+    <div class="section-glow section-glow-right"></div>
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Clients</span>
+        <h2 class="section-title">
+          What our <span class="accent">clients say</span>
+        </h2>
+        <p class="section-sub">
+          Verified reviews from recent client engagements.
+        </p>
+      </div>
+
+      <div class="testi-grid">
+        <!-- Testimonial 1 -->
+        <figure class="testi-card">
+          <div class="testi-mark">&ldquo;</div>
+          <div class="testi-stars" aria-label="5 out of 5 stars">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
+          </div>
+          <blockquote class="testi-quote">
+            <p>Working with Mathew at OnTimeData was an excellent experience from start to finish. He was professional, efficient, and thorough throughout the entire process. From our very first conversation, he took the time to understand exactly what I wanted and immediately got to work. There was never any confusion or miscommunication.</p>
+            <p>I had spoken with several other people about building a website before finding Mathew, but after talking with him I knew right away he was the right choice. He clearly explained his process, set the right expectations, and delivered exactly what I was looking for.</p>
+            <p>He paid close attention to every detail and made sure the final website reflected my vision. <strong>I highly recommend Mathew and OnTimeData to anyone looking for a professional, reliable, and knowledgeable web developer. 10/10 experience.</strong></p>
+          </blockquote>
+          <figcaption class="testi-foot">
+            <span class="testi-avatar">C</span>
+            <span>
+              <span class="testi-name">Chris J.</span><br>
+              <span class="testi-role">Website Build</span>
+            </span>
+            <span class="testi-verified">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Verified
+            </span>
+          </figcaption>
+        </figure>
+
+        <!-- Testimonial 2 -->
+        <figure class="testi-card">
+          <div class="testi-mark">&ldquo;</div>
+          <div class="testi-stars" aria-label="5 out of 5 stars">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>
+          </div>
+          <blockquote class="testi-quote">
+            <p>Working with On Time Data LLC was an absolute game changer. They built me an advanced, <strong>AI-integrated website that looks like it easily cost $10,000</strong>. The quality is just stunning.</p>
+            <p>Mathew, the CEO, was incredible throughout the entire process. Every single tweak and change I requested was handled fast and with precise execution. His ability to take exactly what you envision in your mind and bring it to life is truly second to none.</p>
+            <p>The sheer value Mathew brings to the table is worth way more than what he charges. <strong>If you want top-tier execution and a seamless build, I cannot recommend On Time Data LLC enough.</strong></p>
+          </blockquote>
+          <figcaption class="testi-foot">
+            <span class="testi-avatar">R</span>
+            <span>
+              <span class="testi-name">Roman A.</span><br>
+              <span class="testi-role">AI-Integrated Website</span>
+            </span>
+            <span class="testi-verified">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Verified
+            </span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= CTA BANNER ========================= -->
+  <section class="gradient-banner gradient-banner-cta">
+    <div class="container gradient-banner-inner">
+      <h2 class="gradient-banner-title">Every unanswered lead is revenue lost.</h2>
+      <a href="#booking" class="btn-pill btn-pill-solid btn-pill-light">Schedule a Consultation</a>
+    </div>
+  </section>
+
+  <!-- ========================= BOOKING ========================= -->
+  <section class="section" id="booking">
+    <div class="section-glow section-glow-center"></div>
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Contact</span>
+        <h2 class="section-title">
+          Schedule a <span class="accent">consultation</span>
+        </h2>
+        <p class="section-sub">
+          A focused 15-minute call to walk through the platform for your industry.
+        </p>
+      </div>
+
+      <div class="booking-cta-wrap">
+        <button type="button" class="btn-pill btn-pill-solid btn-pill-lg" data-booking-open>
+          View Available Times
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= FOOTER ========================= -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="#top" class="logo">
+          <span class="logo-icon small">OTD</span>
+          <span class="logo-words">
+            <span class="logo-name">OnTimeData</span>
+            <span class="logo-llc">LLC</span>
+          </span>
+        </a>
+        <p class="footer-tag">AI lead engagement, websites, and private AI infrastructure for teams that hate watching opportunities walk.</p>
+      </div>
+
+      <div class="footer-contact">
+        <a href="mailto:data@ontimedata.com" class="footer-contact-item">data@ontimedata.com</a>
+      </div>
+
+      <div class="footer-legal">
+        <div class="footer-nav">
+          <a href="/terms.html">Terms</a>
+          <a href="/privacy.html">Privacy Policy</a>
+        </div>
+        <p>&copy; 2026 OnTimeData LLC. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================= BOOKING MODAL ========================= -->
+  <div class="booking-modal" id="bookingModal" role="dialog" aria-modal="true" aria-label="Book a demo">
+    <div class="booking-modal-panel">
+      <button type="button" class="booking-modal-close" id="bookingModalClose" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+      </button>
+      <iframe class="booking-modal-iframe"
+              id="bookingModalIframe"
+              data-src="https://api.leadconnectorhq.com/widget/booking/IMOSapMbld7olj3vsu9X"
+              scrolling="no"
+              title="Booking calendar"></iframe>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var modal  = document.getElementById('bookingModal');
+      var iframe = document.getElementById('bookingModalIframe');
+      var closeBtn = document.getElementById('bookingModalClose');
+      var loaded = false;
+
+      function openModal(e) {
+        if (e) e.preventDefault();
+        if (!loaded) { iframe.src = iframe.getAttribute('data-src'); loaded = true; }
+        modal.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeModal() {
+        modal.classList.remove('is-open');
+        document.body.style.overflow = '';
+      }
+
+      // Any booking CTA opens the modal instead of scrolling to an open embed
+      document.querySelectorAll('a[href="#booking"], [data-booking-open]').forEach(function (el) {
+        el.addEventListener('click', openModal);
+      });
+
+      closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+    })();
+  </script>
+
+  <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
+  <script src="script.js?v=6"></script>
+</body>
+</html>
